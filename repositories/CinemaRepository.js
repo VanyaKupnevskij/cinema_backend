@@ -6,7 +6,7 @@ import loadQuery from '../queries/loadQuery.js';
 
 const createPostQuery = loadQuery('createPost');
 
-class PostRepository extends IRepository {
+class CinemaRepository extends IRepository {
   constructor() {
     super();
   }
@@ -53,4 +53,4 @@ class PostRepository extends IRepository {
   }
 }
 
-export default PostRepository;
+export default CinemaRepository;

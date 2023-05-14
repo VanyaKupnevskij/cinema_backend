@@ -1,9 +1,9 @@
 import AppError, { ERROR_PRESETS } from '../errors/AppError.js';
 import BaseService from './BaseService.js';
-import PostEntity from '../entities/PostEntity.js';
-import TagEntity from '../entities/TagEntity.js';
+import CinemaEntity from '../entities/CinemaEntity.js';
+import IncomeEntity from '../entities/IncomeEntity.js';
 
-class PostService extends BaseService {
+class CinemaService extends BaseService {
   constructor(repository) {
     super(repository);
   }
@@ -14,12 +14,12 @@ class PostService extends BaseService {
       throw new AppError(ERROR_PRESETS.CREATE(title));
     }
 
-    let post = new PostEntity();
+    let post = new CinemaEntity();
     post.title = title;
     post.text = text;
     post.facebook_info = facebook_info;
     post.telegram_info = telegram_info;
-    post.tags = tags.map((tag) => new TagEntity({ text: tag.text }));
+    post.tags = tags.map((tag) => new IncomeEntity({ text: tag.text }));
 
     const createdPost = await this.repository.add(post);
 
@@ -46,4 +46,4 @@ class PostService extends BaseService {
   };
 }
 
-export default PostService;
+export default CinemaService;

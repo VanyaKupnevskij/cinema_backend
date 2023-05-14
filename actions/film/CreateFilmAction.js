@@ -1,37 +1,27 @@
 import IAction from '../IAction.js';
 import { STATUS } from '../../config/enums.js';
 
-import PostService from '../../services/PostService.js';
-import PostRepository from '../../repositories/PostRepository.js';
+import CinemaService from '../../services/CinemaService.js';
+import CinemaRepository from '../../repositories/CinemaRepository.js';
 import AppError, { ERROR_PRESETS } from '../../errors/AppError.js';
-import FacebookInfoEntity from '../../entities/FacebookInfoEntity.js';
-import TelegramInfoEntity from '../../entities/TelegramInfoEntity.js';
+import RoleEntity from '../../entities/RoleEntity.js';
 
 class CreateFilmAction extends IAction {
   constructor() {
     super();
 
-    this.postService = new PostService(new PostRepository());
+    this.postService = new CinemaService(new CinemaRepository());
   }
 
   run = async (req, res) => {
     let validData = this.validate(req.body);
 
-    // TODO: remove to facebook and telegram sevices
     if (validData.facebook_info) {
-      let facebook = new FacebookInfoEntity();
+      let facebook = new RoleEntity();
       facebook.id_post = validData.facebook_info.id_post;
       facebook.files = validData.facebook_info.files;
 
       validData.facebook_info = facebook;
-    }
-    if (validData.telegram_info) {
-      let telegram = new TelegramInfoEntity();
-      telegram.id_files_post = telegram_info.id_files_post;
-      telegram.id_post = validData.telegram_info.id_post;
-      telegram.files = validData.telegram_info.files;
-
-      validData.telegram_info = telegram;
     }
 
     const createdPost = await this.postService.create(validData);
