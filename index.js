@@ -1,6 +1,8 @@
 import express from 'express';
 import 'express-async-errors';
 import cinemaRouter from './routers/cinema.route.js';
+import sessionRouter from './routers/session.route.js';
+import filmRouter from './routers/film.route.js';
 import cors from './middlewares/cors.middleware.js';
 import error from './middlewares/error.middleware.js';
 import config from 'config';
@@ -14,6 +16,8 @@ app.use(cors);
 app.use(express.json({ extended: true }));
 
 app.use('/api/cinemas/', cinemaRouter);
+app.use('/api/sessions/', sessionRouter);
+app.use('/api/films/', filmRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'client', 'build')));
