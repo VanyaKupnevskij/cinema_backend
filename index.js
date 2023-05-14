@@ -1,7 +1,6 @@
 import express from 'express';
 import 'express-async-errors';
-import authRouter from './routers/auth.route.js';
-import postRouter from './routers/post.route.js';
+import cinemaRouter from './routers/cinema.route.js';
 import cors from './middlewares/cors.middleware.js';
 import error from './middlewares/error.middleware.js';
 import config from 'config';
@@ -14,8 +13,7 @@ const PORT = config.get('port') || 4444;
 app.use(cors);
 app.use(express.json({ extended: true }));
 
-app.use('/api/auth', authRouter);
-app.use('/api/postes/', postRouter);
+app.use('/api/cinemas/', cinemaRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'client', 'build')));

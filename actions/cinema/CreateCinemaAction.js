@@ -7,20 +7,14 @@ import AppError, { ERROR_PRESETS } from '../../errors/AppError.js';
 import FacebookInfoEntity from '../../entities/FacebookInfoEntity.js';
 import TelegramInfoEntity from '../../entities/TelegramInfoEntity.js';
 
-class CreateAction extends IAction {
+class CreateCinemaAction extends IAction {
   constructor() {
     super();
 
     this.postService = new PostService(new PostRepository());
   }
 
-  get accessTag() {
-    return 'post:create';
-  }
-
   run = async (req, res) => {
-    this.checkRole(req.user.role);
-
     let validData = this.validate(req.body);
 
     // TODO: remove to facebook and telegram sevices
@@ -57,4 +51,4 @@ class CreateAction extends IAction {
   }
 }
 
-export default CreateAction;
+export default CreateCinemaAction;

@@ -5,25 +5,19 @@ import PostService from '../../services/PostService.js';
 import PostRepository from '../../repositories/PostRepository.js';
 import AppError, { ERROR_PRESETS } from '../../errors/AppError.js';
 
-class DeletePostByIdAction extends IAction {
+class GetCinemaAction extends IAction {
   constructor() {
     super();
 
     this.postService = new PostService(new PostRepository());
   }
 
-  get accessTag() {
-    return 'post:delete-post-by-id';
-  }
-
   run = async (req, res) => {
-    this.checkRole(req.user.role);
-
     const { id } = this.validate(req.params);
 
-    await this.postService.deletePostById(id);
+    const post = await this.postService.getPostById(id);
 
-    return res.json({ success: true, message: `Seccesful deleted post by id: ${id}` });
+    return res.json({ ...post });
   };
 
   validate(input) {
@@ -37,4 +31,4 @@ class DeletePostByIdAction extends IAction {
   }
 }
 
-export default DeletePostByIdAction;
+export default GetCinemaAction;
