@@ -25,10 +25,22 @@ class CinemaRepository extends IRepository {
   async update(id, newCinema) {}
 
   async getById(id) {
-    const [rows] = await connection.execute('SELECT * FROM cinemas WHERE id = ?', [id]);
+    const [cinemas] = await connection.execute('SELECT * FROM cinemas WHERE id = ?', [id]);
 
-    const cinema = rows[0];
+    const cinema = cinemas[0];
     if (!cinema) throw new AppError(ERROR_PRESETS.ENTITY_ID_NOT_EXIST(id));
+
+    const [halls] = await connection.execute(
+      'SELECT id, seats, number FROM halls WHERE cinemas_id = ?',
+      [cinema.id],
+    );
+    const [incomes] = await connection.execute(
+      'SELECT id, date, income_value FROM income WHERE cinemas_id = ?',
+      [cinema.id],
+    );
+
+    cinema.halls = halls;
+    cinema.incomes = incomes;
 
     return cinema;
   }

@@ -36,15 +36,15 @@ class CinemaService extends BaseService {
   };
 
   getAll = async () => {
-    const postes = await this.repository.getAll();
+    const cinemas = await this.repository.getAll();
 
-    return postes;
+    return cinemas;
   };
 
   getById = async (id) => {
-    const post = await this.repository.getById(id);
+    const cinema = await this.repository.getById(id);
 
-    return post;
+    return cinema;
   };
 
   deleteById = async (id) => {
