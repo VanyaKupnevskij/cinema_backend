@@ -4,8 +4,9 @@ class SessionEntity extends IEntity {
   constructor(uid) {
     super(uid);
 
-    this.date = new Date(Date.now());
+    this.hall = null;
     this.film = null;
+    this.date = new Date(Date.now());
     this.price = 0;
     this.free_place = 0;
   }

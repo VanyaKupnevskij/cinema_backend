@@ -1,23 +1,23 @@
 import IAction from '../IAction.js';
 
 import UID from '../../lib/UID.js';
-import CinemaService from '../../services/CinemaService.js';
-import CinemaRepository from '../../repositories/CinemaRepository.js';
+import SessionService from '../../services/SessionService.js';
+import SessionRepository from '../../repositories/SessionRepository.js';
 import AppError, { ERROR_PRESETS } from '../../errors/AppError.js';
 
 class BuyTicketAction extends IAction {
   constructor() {
     super();
 
-    this.postService = new CinemaService(new CinemaRepository());
+    this.sessionService = new SessionService(new SessionRepository());
   }
 
   run = async (req, res) => {
     const { id } = this.validate(req.params);
 
-    const post = await this.postService.getPostById(id);
+    const session = await this.sessionService.getById(id);
 
-    return res.json({ ...post });
+    return res.json({ ...session });
   };
 
   validate(input) {

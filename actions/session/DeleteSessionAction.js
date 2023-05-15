@@ -1,23 +1,23 @@
 import IAction from '../IAction.js';
 
 import UID from '../../lib/UID.js';
-import CinemaService from '../../services/CinemaService.js';
-import CinemaRepository from '../../repositories/CinemaRepository.js';
+import SessionService from '../../services/SessionService.js';
+import SessionRepository from '../../repositories/SessionRepository.js';
 import AppError, { ERROR_PRESETS } from '../../errors/AppError.js';
 
 class DeleteSessionAction extends IAction {
   constructor() {
     super();
 
-    this.postService = new CinemaService(new CinemaRepository());
+    this.sessionService = new SessionService(new SessionRepository());
   }
 
   run = async (req, res) => {
     const { id } = this.validate(req.params);
 
-    await this.postService.deletePostById(id);
+    await this.sessionService.deleteById(id);
 
-    return res.json({ success: true, message: `Seccesful deleted post by id: ${id}` });
+    return res.json({ success: true, message: `Seccesful deleted session by id: ${id}` });
   };
 
   validate(input) {

@@ -1,22 +1,36 @@
 import IAction from '../IAction.js';
 
-import CinemaService from '../../services/CinemaService.js';
-import CinemaRepository from '../../repositories/CinemaRepository.js';
+import SessionService from '../../services/SessionService.js';
+import SessionRepository from '../../repositories/SessionRepository.js';
+import AppError, { ERROR_PRESETS } from '../../errors/AppError.js';
 
 class GetAllSessionsAction extends IAction {
   constructor() {
     super();
 
-    this.postService = new CinemaService(new CinemaRepository());
+    this.sessionService = new SessionService(new SessionRepository());
   }
 
   run = async (req, res) => {
-    const postes = await this.postService.getPostes();
+    let validData = this.validate(req.query);
 
-    return res.json(postes);
+    const sessions = await this.sessionService.getAll(validData);
+
+    return res.json(sessions);
   };
 
-  validate(input) {}
+  validate(input) {
+    if (!input.date) {
+      throw new AppError(ERROR_PRESETS.INVALID_INPUT('Date', input.date, 'must exist'));
+    }
+    if (!Date.parse(input.date)) {
+      throw new AppError(ERROR_PRESETS.INVALID_INPUT('Date', input.date, 'is not valid'));
+    }
+
+    // input.date = new Date(input.date);
+
+    return input;
+  }
 }
 
 export default GetAllSessionsAction;

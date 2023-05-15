@@ -1,40 +1,44 @@
 import IAction from '../IAction.js';
 import { STATUS } from '../../config/enums.js';
 
-import CinemaService from '../../services/CinemaService.js';
-import CinemaRepository from '../../repositories/CinemaRepository.js';
+import SessionService from '../../services/SessionService.js';
+import SessionRepository from '../../repositories/SessionRepository.js';
 import AppError, { ERROR_PRESETS } from '../../errors/AppError.js';
-import FilmEntity from '../../entities/FilmEntity.js';
 
 class CreateSessionAction extends IAction {
   constructor() {
     super();
 
-    this.postService = new CinemaService(new CinemaRepository());
+    this.sessionService = new SessionService(new SessionRepository());
   }
 
   run = async (req, res) => {
     let validData = this.validate(req.body);
 
-    if (validData.facebook_info) {
-      let facebook = new FilmEntity();
-      facebook.id_post = validData.facebook_info.id_post;
-      facebook.files = validData.facebook_info.files;
+    const createdSession = await this.sessionService.create(validData);
 
-      validData.facebook_info = facebook;
-    }
-
-    const createdPost = await this.postService.create(validData);
-
-    return res.status(STATUS.created).json({ id: createdPost.id, title: createdPost.title });
+    return res.status(STATUS.created).json({
+      id: createdSession.id,
+      price: createdSession.price,
+      date: createdSession.date,
+    });
   };
 
   validate(input) {
-    if (!input.title) {
-      throw new AppError(ERROR_PRESETS.INVALID_INPUT('Title', title, 'must exist'));
+    if (!input.halls_id) {
+      throw new AppError(ERROR_PRESETS.INVALID_INPUT('Halls_id', halls_id, 'must exist'));
     }
-    if (!input.text) {
-      throw new AppError(ERROR_PRESETS.INVALID_INPUT('Text', text, 'must exist'));
+    if (!input.films_id) {
+      throw new AppError(ERROR_PRESETS.INVALID_INPUT('Films_id', films_id, 'must exist'));
+    }
+    if (!input.price) {
+      throw new AppError(ERROR_PRESETS.INVALID_INPUT('Price', price, 'must exist'));
+    }
+    if (!input.date) {
+      throw new AppError(ERROR_PRESETS.INVALID_INPUT('Date', date, 'must exist'));
+    }
+    if (!input.free_place) {
+      throw new AppError(ERROR_PRESETS.INVALID_INPUT('Free_place', free_place, 'must exist'));
     }
 
     return input;
