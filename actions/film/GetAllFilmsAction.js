@@ -1,19 +1,19 @@
 import IAction from '../IAction.js';
 
-import CinemaService from '../../services/CinemaService.js';
-import CinemaRepository from '../../repositories/CinemaRepository.js';
+import FilmService from '../../services/FilmService.js';
+import FilmRepository from '../../repositories/FilmRepository.js';
 
 class GetAllFilmsAction extends IAction {
   constructor() {
     super();
 
-    this.postService = new CinemaService(new CinemaRepository());
+    this.filmService = new FilmService(new FilmRepository());
   }
 
   run = async (req, res) => {
-    const postes = await this.postService.getPostes();
+    const films = await this.filmService.getAll();
 
-    return res.json(postes);
+    return res.json(films);
   };
 
   validate(input) {}

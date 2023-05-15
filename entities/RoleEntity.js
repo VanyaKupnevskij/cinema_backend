@@ -4,7 +4,7 @@ class RoleEntity extends IEntity {
   constructor(uid) {
     super(uid);
 
-    this.actors = [];
+    this.actor = null;
   }
 }
 
