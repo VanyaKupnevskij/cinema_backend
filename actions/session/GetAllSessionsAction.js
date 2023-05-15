@@ -27,8 +27,6 @@ class GetAllSessionsAction extends IAction {
       throw new AppError(ERROR_PRESETS.INVALID_INPUT('Date', input.date, 'is not valid'));
     }
 
-    // input.date = new Date(input.date);
-
     return input;
   }
 }

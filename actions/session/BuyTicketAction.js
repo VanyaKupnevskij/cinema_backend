@@ -15,9 +15,9 @@ class BuyTicketAction extends IAction {
   run = async (req, res) => {
     const { id } = this.validate(req.params);
 
-    const session = await this.sessionService.getById(id);
+    await this.sessionService.buyTicket(id);
 
-    return res.json({ ...session });
+    return res.json({ success: true, message: `Seccesful buy ticket session by id: ${id}` });
   };
 
   validate(input) {

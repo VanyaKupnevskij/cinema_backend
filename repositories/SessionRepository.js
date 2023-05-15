@@ -3,9 +3,11 @@ import IRepository from './IRepository.js';
 import { pool as connection } from '../config/database.mysql.js';
 import AppError, { ERROR_PRESETS } from '../errors/AppError.js';
 import loadQuery from '../queries/loadQuery.js';
+import UID from '../lib/UID.js';
 
 const createSessionQuery = loadQuery('createSession');
 const getAllSessionQuery = loadQuery('getAllSession');
+const buyTicketSessionQuery = loadQuery('buyTicketSession');
 
 class SessionRepository extends IRepository {
   constructor() {
@@ -95,6 +97,17 @@ class SessionRepository extends IRepository {
     );
 
     return rows;
+  }
+
+  async buyTicket(id) {
+    const [session] = await connection.execute('SELECT * FROM sessions WHERE id = ?', [id]);
+
+    if (session.length > 0) {
+      const uidIncome = UID.create();
+      await connection.query(buyTicketSessionQuery, [id, id, uidIncome]);
+    }
+
+    return session.length > 0;
   }
 }
 

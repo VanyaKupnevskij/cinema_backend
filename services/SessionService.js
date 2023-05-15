@@ -45,6 +45,13 @@ class SessionService extends BaseService {
       throw new AppError(ERROR_PRESETS.DELETE_ENTITY_BY_ID(id));
     }
   };
+
+  buyTicket = async (id) => {
+    const isSeccessful = await this.repository.buyTicket(id);
+    if (!isSeccessful) {
+      throw new AppError(ERROR_PRESETS.BUY_ENTITY_BY_ID(id));
+    }
+  };
 }
 
 export default SessionService;

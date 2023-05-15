@@ -18,6 +18,6 @@ sessionRouter.get('/', getAllSessionsAction.run);
 sessionRouter.post('/create', createSessionAction.run);
 sessionRouter.get('/:id', getSessionAction.run);
 sessionRouter.delete('/:id', deleteSessionAction.run);
-sessionRouter.post('/:id', buyTicketAction.run);
+sessionRouter.post('/buy/:id', buyTicketAction.run);
 
 export default sessionRouter;

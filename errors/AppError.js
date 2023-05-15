@@ -58,6 +58,14 @@ export const ERROR_PRESETS = {
       layer: LAYER.service,
     };
   },
+  BUY_ENTITY_BY_ID: (id) => {
+    return {
+      message: `Failed buy entity by id <${id}>`,
+      status: STATUS.ok,
+      userCode: USER_CODE.error_server,
+      layer: LAYER.service,
+    };
+  },
 };
 
 export default AppError;
