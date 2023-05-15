@@ -16,7 +16,7 @@ class CinemaRepository extends IRepository {
       newCinema.id,
       newCinema.name,
       newCinema.adress,
-      newCinema.halls.map((hall) => [hall.id, hall.number, hall.seats]),
+      newCinema.halls.map((hall) => [hall.id, newCinema.id, hall.number, hall.seats]),
     ]);
 
     return this.getById(newCinema.id);

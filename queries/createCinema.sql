@@ -3,12 +3,10 @@ BEGIN;
 SET @id = ?;
 SET @name = ?;
 SET @adress = ?;
-SET @halls = ?;
 
-
-INSERT INTO postes (id, name, adress) 
+INSERT INTO cinemas (id, name, adress) 
             VALUES (@id, @name, @adress);
-INSERT INTO halls (id, number, seats) 
-            VALUES @halls;
+INSERT INTO halls (id, cinemas_id, number, seats) 
+            VALUES ?;
 
 COMMIT;

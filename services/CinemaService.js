@@ -30,9 +30,9 @@ class CinemaService extends BaseService {
     cinema.adress = cinemaData.adress;
     cinema.halls = cinemaData.halls;
 
-    const createdPost = await this.repository.insert(cinema);
+    const createdCinema = await this.repository.insert(cinema);
 
-    return createdPost;
+    return createdCinema;
   };
 
   getAll = async () => {

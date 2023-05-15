@@ -9,15 +9,15 @@ class DeleteCinemaAction extends IAction {
   constructor() {
     super();
 
-    this.postService = new CinemaService(new CinemaRepository());
+    this.cinemaService = new CinemaService(new CinemaRepository());
   }
 
   run = async (req, res) => {
     const { id } = this.validate(req.params);
 
-    await this.postService.deletePostById(id);
+    await this.cinemaService.deleteById(id);
 
-    return res.json({ success: true, message: `Seccesful deleted post by id: ${id}` });
+    return res.json({ success: true, message: `Seccesful deleted cinema by id: ${id}` });
   };
 
   validate(input) {

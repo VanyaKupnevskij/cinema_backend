@@ -9,15 +9,15 @@ class GetCinemaAction extends IAction {
   constructor() {
     super();
 
-    this.postService = new CinemaService(new CinemaRepository());
+    this.cinemaService = new CinemaService(new CinemaRepository());
   }
 
   run = async (req, res) => {
     const { id } = this.validate(req.params);
 
-    const post = await this.postService.getPostById(id);
+    const cinema = await this.cinemaService.getById(id);
 
-    return res.json({ ...post });
+    return res.json({ ...cinema });
   };
 
   validate(input) {
