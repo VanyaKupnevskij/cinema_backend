@@ -4,29 +4,28 @@ import { pool as connection } from '../config/database.mysql.js';
 import AppError, { ERROR_PRESETS } from '../errors/AppError.js';
 import loadQuery from '../queries/loadQuery.js';
 
-const createPostQuery = loadQuery('createPost');
+const createCinemaQuery = loadQuery('createCinema');
 
 class CinemaRepository extends IRepository {
   constructor() {
     super();
   }
 
-  async add(newPost) {
-    await connection.query(createPostQuery, [
-      newPost.id,
-      newPost.created,
-      newPost.modified,
-      newPost.title,
-      newPost.text,
+  async add(newCinema) {
+    await connection.query(createCinemaQuery, [
+      newCinema.id,
+      newCinema.name,
+      newCinema.adress,
+      newCinema.halls,
     ]);
 
-    return this.getById(newPost.id);
+    return this.getById(newCinema.id);
   }
 
   async update(id, newPost) {}
 
   async getById(id) {
-    const [rows] = await connection.execute('SELECT * FROM postes WHERE id = ?', [id]);
+    const [rows] = await connection.execute('SELECT * FROM cinemas WHERE id = ?', [id]);
 
     const post = rows[0];
     if (!post) throw new AppError(ERROR_PRESETS.POST_ID_NOT_EXIST(id));
@@ -35,19 +34,19 @@ class CinemaRepository extends IRepository {
   }
 
   async getAll() {
-    const [rows] = await connection.execute('SELECT id, title FROM postes');
+    const [rows] = await connection.execute('SELECT id, name, adress FROM cinemas');
 
     return rows;
   }
 
   async remove(id) {
-    const result = await connection.query('DELETE FROM postes WHERE id = ?', [id]);
+    const result = await connection.query('DELETE FROM cinemas WHERE id = ?', [id]);
 
     return result[0].affectedRows > 0;
   }
 
-  async findByTitle(title) {
-    const [rows] = await connection.execute('SELECT * FROM postes WHERE title = ?', [title]);
+  async findByName(name) {
+    const [rows] = await connection.execute('SELECT * FROM cinemas WHERE name = ?', [name]);
 
     return rows;
   }

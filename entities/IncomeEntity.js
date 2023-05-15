@@ -1,7 +1,7 @@
 import IEntity from './IEntity.js';
 
 class IncomeEntity extends IEntity {
-  constructor({ uid, text = '' }) {
+  constructor({ uid }) {
     super(uid);
 
     this.income_value = 0;

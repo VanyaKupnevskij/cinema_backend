@@ -1,27 +1,36 @@
 import AppError, { ERROR_PRESETS } from '../errors/AppError.js';
 import BaseService from './BaseService.js';
 import CinemaEntity from '../entities/CinemaEntity.js';
-import IncomeEntity from '../entities/IncomeEntity.js';
+import HallEntity from '../entities/HallEntity.js';
 
 class CinemaService extends BaseService {
   constructor(repository) {
     super(repository);
   }
 
-  create = async ({ title, text, tags, facebook_info, telegram_info }) => {
-    const findedPost = (await this.repository.findByTitle(title))[0];
-    if (findedPost) {
-      throw new AppError(ERROR_PRESETS.CREATE(title));
+  create = async (cinemaData) => {
+    const findedCinema = (await this.repository.findByName(cinemaData.name))[0];
+    if (findedCinema) {
+      throw new AppError(ERROR_PRESETS.CREATE(cinemaData.name));
     }
 
-    let post = new CinemaEntity();
-    post.title = title;
-    post.text = text;
-    post.facebook_info = facebook_info;
-    post.telegram_info = telegram_info;
-    post.tags = tags.map((tag) => new IncomeEntity({ text: tag.text }));
+    if (cinemaData.halls) {
+      let halls = cinemaData.halls.map((hall) => {
+        let hallEntity = new HallEntity();
+        hallEntity.number = hall.number;
+        hallEntity.seats = hall.seats;
+        return hallEntity;
+      });
 
-    const createdPost = await this.repository.add(post);
+      cinemaData.halls = halls;
+    }
+
+    let cinema = new CinemaEntity();
+    cinema.name = cinemaData.name;
+    cinema.adress = cinemaData.adress;
+    cinema.halls = cinemaData.halls;
+
+    const createdPost = await this.repository.add(cinema);
 
     return createdPost;
   };
