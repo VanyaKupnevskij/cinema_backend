@@ -6,7 +6,9 @@ SET @adress = ?;
 SET @halls = ?;
 
 
-INSERT INTO postes (id, name, adress, halls) 
-            VALUES (@id, @name, @adress, @halls);
+INSERT INTO postes (id, name, adress) 
+            VALUES (@id, @name, @adress);
+INSERT INTO halls (id, number, seats) 
+            VALUES @halls;
 
 COMMIT;

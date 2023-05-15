@@ -19,12 +19,12 @@ class CreateCinemaAction extends IAction {
 
     return res
       .status(STATUS.created)
-      .json({ id: createdCinema.id, title: createdCinema.name, adress: createdCinema.adress });
+      .json({ id: createdCinema.id, name: createdCinema.name, adress: createdCinema.adress });
   };
 
   validate(input) {
     if (!input.name) {
-      throw new AppError(ERROR_PRESETS.INVALID_INPUT('Name', input.nam, 'must exist'));
+      throw new AppError(ERROR_PRESETS.INVALID_INPUT('Name', input.name, 'must exist'));
     }
     if (!input.adress) {
       throw new AppError(ERROR_PRESETS.INVALID_INPUT('Adress', input.adress, 'must exist'));

@@ -1,7 +1,7 @@
 class IRepository {
   constructor() {
-    if (this.add === undefined) {
-      throw new Error('Must override .add() method');
+    if (this.insert === undefined) {
+      throw new Error('Must override .insert() method');
     }
 
     if (this.update === undefined) {
@@ -16,8 +16,8 @@ class IRepository {
       throw new Error('Must override .getAll() method');
     }
 
-    if (this.remove === undefined) {
-      throw new Error('Must override .remove() method');
+    if (this.delete === undefined) {
+      throw new Error('Must override .delete() method');
     }
   }
 }

@@ -30,27 +30,27 @@ class CinemaService extends BaseService {
     cinema.adress = cinemaData.adress;
     cinema.halls = cinemaData.halls;
 
-    const createdPost = await this.repository.add(cinema);
+    const createdPost = await this.repository.insert(cinema);
 
     return createdPost;
   };
 
-  getPostes = async () => {
+  getAll = async () => {
     const postes = await this.repository.getAll();
 
     return postes;
   };
 
-  getPostById = async (id) => {
+  getById = async (id) => {
     const post = await this.repository.getById(id);
 
     return post;
   };
 
-  deletePostById = async (id) => {
-    const isSeccessful = await this.repository.remove(id);
+  deleteById = async (id) => {
+    const isSeccessful = await this.repository.delete(id);
     if (!isSeccessful) {
-      throw new AppError(ERROR_PRESETS.DELETE_POST_BY_ID(id));
+      throw new AppError(ERROR_PRESETS.DELETE_ENTITY_BY_ID(id));
     }
   };
 }

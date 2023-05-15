@@ -11,26 +11,26 @@ class CinemaRepository extends IRepository {
     super();
   }
 
-  async add(newCinema) {
+  async insert(newCinema) {
     await connection.query(createCinemaQuery, [
       newCinema.id,
       newCinema.name,
       newCinema.adress,
-      newCinema.halls,
+      newCinema.halls.map((hall) => [hall.id, hall.number, hall.seats]),
     ]);
 
     return this.getById(newCinema.id);
   }
 
-  async update(id, newPost) {}
+  async update(id, newCinema) {}
 
   async getById(id) {
     const [rows] = await connection.execute('SELECT * FROM cinemas WHERE id = ?', [id]);
 
-    const post = rows[0];
-    if (!post) throw new AppError(ERROR_PRESETS.POST_ID_NOT_EXIST(id));
+    const cinema = rows[0];
+    if (!cinema) throw new AppError(ERROR_PRESETS.ENTITY_ID_NOT_EXIST(id));
 
-    return post;
+    return cinema;
   }
 
   async getAll() {
@@ -39,7 +39,7 @@ class CinemaRepository extends IRepository {
     return rows;
   }
 
-  async remove(id) {
+  async delete(id) {
     const result = await connection.query('DELETE FROM cinemas WHERE id = ?', [id]);
 
     return result[0].affectedRows > 0;
