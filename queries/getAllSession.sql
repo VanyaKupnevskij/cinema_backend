@@ -12,6 +12,7 @@ SELECT sessions.id AS id, price, free_place, date,
         INNER JOIN halls ON
             sessions.halls_id = halls.id
         WHERE date >= DATE(@date) 
-        AND date < DATE(@date) + INTERVAL 1 DAY;
+        AND date < DATE(@date) + INTERVAL 1 DAY
+        AND halls.cinemas_id = ?;
 
 COMMIT;

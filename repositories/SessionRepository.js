@@ -78,8 +78,8 @@ class SessionRepository extends IRepository {
     return session;
   }
 
-  async getAll(date) {
-    const sessions = await connection.query(getAllSessionQuery, [date]);
+  async getAll(date, cinemas_id) {
+    const sessions = await connection.query(getAllSessionQuery, [date, cinemas_id]);
 
     return sessions[0][2];
   }

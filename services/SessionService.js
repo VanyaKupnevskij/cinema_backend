@@ -28,7 +28,7 @@ class SessionService extends BaseService {
   };
 
   getAll = async (sessionData) => {
-    const sessions = await this.repository.getAll(sessionData.date);
+    const sessions = await this.repository.getAll(sessionData.date, sessionData.cinemas_id);
 
     return sessions;
   };
